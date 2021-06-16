@@ -14,37 +14,29 @@ Book.prototype.info  = function() {
   console.log(title + ' ' + author + ', ' + numPages.toString() + ' pages, ' + status)
 }
 
-const body = document.querySelector("#body");
-const modal = document.querySelector("#exampleModal");
-
 
 function addBookToLibrary(e) {
   e.preventDefault();
-  body.classList.remove('modal-open');
-  body.removeAttribute('style')
-  body.removeAttribute('data-bs-padding-right')
-  modal.classList.remove('show')
-  document.querySelector('modal-backdrop fade show').remove()
-
-   //const newBook = new Book($title.value, $author.value, $numPages.value, $status.value)
-   /* if ($title.value.length === 0 || $author.value.length === 0) {
+  
+   const newBook = new Book(title.value, author.value, numPages.value, read.checked)
+   if (title.value.length === 0 || author.value.length === 0) {
      alert("Please, fill all the fields");
      return;
    }
    else {
      myLibrary.push(newBook);  
      updateLocalStorage
-   } */
-  console.log("Successfully added")
+   } 
+  console.log(myLibrary)
 }
 
 function changeStatus(book){
-  if (read === true) {
+   if (read === true) {
     book.read = false
   }
   else{
     book.read = true
-  }
+  } 
 }
 
 function deleteBook(currentBook) {
