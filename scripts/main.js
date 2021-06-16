@@ -7,20 +7,35 @@ function Book(title, author, numPages, read){
   this.read = read
 }
 
+const $form = document.querySelector("#bookform").addEventListener ("submit", addBookToLibrary)
+
+
 Book.prototype.info  = function() {
   console.log(title + ' ' + author + ', ' + numPages.toString() + ' pages, ' + status)
 }
 
-function addBookToLibrary() {
-  const newBook = new Book($title.value, $author.value, $numPages.value, $status.value)
-  if ($title.value.length === 0 || $author.value.length === 0) {
-    alert("Please, fill all the fields");
-    return;
-  }
-  else {
-    myLibrary.push(newBook);  
-    updateLocalStorage
-  }
+const body = document.querySelector("#body");
+const modal = document.querySelector("#exampleModal");
+
+
+function addBookToLibrary(e) {
+  e.preventDefault();
+  body.classList.remove('modal-open');
+  body.removeAttribute('style')
+  body.removeAttribute('data-bs-padding-right')
+  modal.classList.remove('show')
+  document.querySelector('modal-backdrop fade show').remove()
+
+   //const newBook = new Book($title.value, $author.value, $numPages.value, $status.value)
+   /* if ($title.value.length === 0 || $author.value.length === 0) {
+     alert("Please, fill all the fields");
+     return;
+   }
+   else {
+     myLibrary.push(newBook);  
+     updateLocalStorage
+   } */
+  console.log("Successfully added")
 }
 
 function changeStatus(book){
@@ -37,9 +52,6 @@ function deleteBook(currentBook) {
 }
 
 function displayBook (book){
-  var bookContainer = document.createElement(div)
-  bookContainer.classList.add("column-4")
-
   var card = document.createElement(div);
   card.classList.add("card")
 
@@ -54,8 +66,6 @@ function displayBook (book){
   cardText.classList.add("card-text")
   cardText.textContent(book.title)
 
-  bookContainer.appendChild(document.getElementById("library-container"))
-  card.appendChild(bookContainer)
   cardBody.appendChild(card)
   cardTitle.appendChild(cardBody)
   cardText.appendChild(cardBody)
