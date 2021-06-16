@@ -37,6 +37,9 @@ function deleteBook(currentBook) {
 }
 
 function displayBook (book){
+  var bookContainer = document.createElement(div)
+  bookContainer.classList.add("column-4")
+
   var card = document.createElement(div);
   card.classList.add("card")
 
@@ -51,6 +54,8 @@ function displayBook (book){
   cardText.classList.add("card-text")
   cardText.textContent(book.title)
 
+  bookContainer.appendChild(document.getElementById("library-container"))
+  card.appendChild(bookContainer)
   cardBody.appendChild(card)
   cardTitle.appendChild(cardBody)
   cardText.appendChild(cardBody)
