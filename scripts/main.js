@@ -37,16 +37,8 @@ function addBookToLibrary(e) {
    else {
      myLibrary.push(newBook); 
      saveToLocalStorage();
-   } 
-  console.log(myLibrary);
-  retrieveLocalStorage()
-  console.log('retrieved ' + myLibrary[0].title);
+   }
   displayBook(newBook)
-}
-
-
-function deleteBook(currentBook) {
-  myLibrary.splice(myLibrary.indexOf(currentBook), 1)
 }
 
 function displayBook (book){
@@ -54,8 +46,6 @@ function displayBook (book){
   card.classList.add(...bookClasses);
   bookshelf.appendChild(card);
   console.log(card);
-
-
 
   let cardTitle = document.createElement("h5");
   cardTitle.classList.add(...bookTitleClasses);
@@ -101,8 +91,11 @@ function displayBook (book){
 
   let deleteBtn = document.createElement("button");
   deleteBtn.setAttribute("id", "delete" + book.title)
-  deleteBtn.addEventListener("click", e =>{
-    myLibrary.splice(myLibrary.indexOf()
+  deleteBtn.setAttribute('data-index', myLibrary.indexOf(book))
+  deleteBtn.addEventListener("click", (e) =>{
+    myLibrary.splice(e.target.dataset.index, 1);
+    card.remove();
+    saveToLocalStorage();
   }) 
   let deleteBtnText = document.createTextNode("Delete book");
   deleteBtn.classList.add("btn", "btn-danger")
@@ -129,6 +122,6 @@ function retrieveLocalStorage() {
 
 function saveToLocalStorage (){
   localStorage.clear();
-  localStorage.setItem("library", JSON.stringify(myLibrary))
+  localStorage.setItem("library", JSON.stringify(myLibrary));
 }
 
