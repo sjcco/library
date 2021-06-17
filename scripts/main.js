@@ -104,15 +104,15 @@ function displayBook (book){
 }
 
 function changeStatus(e){
-  console.log(e.target)
-}
-
-function retrieveLocalStorage() {
-  // if (localStorage.getItem("mylibrary")) {
-    myLibrary = JSON.parse(localStorage.getItem("library"));
-  // } else {
-  //   library = DEFAULT_DATA;
-  // }
+  if(e.target.textContent.includes('Not')){
+    e.target.classList.remove(...notReadClasses);
+    e.target.classList.add(...readClasses);
+    e.target.textContent = "Read: Yes";
+  } else{
+    e.target.classList.remove(...readClasses);
+    e.target.classList.add(...notReadClasses);
+    e.target.textContent = "Not Read Yet";
+  }
 }
 
 function renderStoredLibrary() {
