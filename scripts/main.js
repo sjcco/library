@@ -103,13 +103,8 @@ function displayBook (book){
   btnsContainer.appendChild(deleteBtn);
 }
 
-function changeStatus(book){
-  if ("Read: Yes" === true) {
-   book.read = false
- }
- else{
-   book.read = true
- } 
+function changeStatus(e){
+  console.log(e.target)
 }
 
 function retrieveLocalStorage() {
@@ -120,8 +115,19 @@ function retrieveLocalStorage() {
   // }
 }
 
+function renderStoredLibrary() {
+  if (localStorage.library) {
+    myLibrary = JSON.parse(localStorage.getItem('library'));
+    myLibrary.forEach((book) => {
+      displayBook(book);
+    });
+  }
+}
+
 function saveToLocalStorage (){
   localStorage.clear();
   localStorage.setItem("library", JSON.stringify(myLibrary));
 }
+
+renderStoredLibrary();
 
