@@ -1,5 +1,16 @@
 let myLibrary = [];
 
+const body = document.querySelector('#body')
+const bookshelf = document.querySelector('#library-container')
+
+const bookClasses = ["card", "col-3", "mb-3", "mx-2", "py-3"]
+const bookTitleClasses = ["text-center", "card-title", "my-1"]
+const bookTextClasses = ["card-text", "text-center"]
+const readClasses = ["btn", "btn-primary"]
+const notReadClasses = ["btn", "btn-outline-secondary"]
+
+
+
 function Book(title, author, numPages, read){
   this.title = title
   this.author = author
@@ -19,15 +30,18 @@ function addBookToLibrary(e) {
   e.preventDefault();
   
    const newBook = new Book(title.value, author.value, numPages.value, read.checked)
-   if (title.value.length === 0 || author.value.length === 0) {
+   if (title.value.length === 0 || author.value.length === 0 || numPages.value === "") {
      alert("Please, fill all the fields");
      return;
    }
    else {
-     myLibrary.push(newBook);  
-     updateLocalStorage
+     myLibrary.push(newBook); 
+     saveToLocalStorage();
    } 
-  console.log(myLibrary)
+  console.log(myLibrary);
+  retrieveLocalStorage()
+  console.log('retrieved ' + myLibrary[0].title);
+  displayBook(newBook)
 }
 
 function changeStatus(book){
@@ -44,34 +58,66 @@ function deleteBook(currentBook) {
 }
 
 function displayBook (book){
-  var card = document.createElement(div);
-  card.classList.add("card")
+  let card = document.createElement("div");
+  card.classList.add(...bookClasses);
+  bookshelf.appendChild(card);
+  console.log(card);
 
-  var cardBody = document.createElement(div)
-  cardBody.classList.add("card-Body")
+  let cardTitle = document.createElement("h5");
+  cardTitle.classList.add(...bookTitleClasses);
+  let cardTitleText = document.createTextNode(book.title);
+  card.appendChild(cardTitle);
+  cardTitle.appendChild(cardTitleText);
 
-  var cardTitle = document.createElement(h5);
-  cardTitle.classList.add("card-title")
-  cardTitle.textContent(book.title)
+  let cardBody = document.createElement("div");
+  cardBody.classList.add("card-Body");
+  card.appendChild(cardBody);
 
-  var cardText = document.createElement(p);
-  cardText.classList.add("card-text")
-  cardText.textContent(book.title)
+  let cardAuthor = document.createElement("p");
+  cardAuthor.classList.add(...bookTextClasses, "fs-4");
+  let cardAuthorText = document.createTextNode("by " + book.author);
+  cardAuthor.appendChild(cardAuthorText);
+  cardBody.appendChild(cardAuthor);
 
-  cardBody.appendChild(card)
-  cardTitle.appendChild(cardBody)
-  cardText.appendChild(cardBody)
+  let cardPages = document.createElement("p");
+  cardPages.classList.add(...bookTextClasses, "fs-5");
+  let cardPagesText = document.createTextNode("Num. of pages: " + book.numPages);
+  cardPages.appendChild(cardPagesText);
+  cardBody.appendChild(cardPages);
+
+  let btnsContainer = document.createElement("div");
+  btnsContainer.classList.add("d-grid", "gap-2", "col-6", "mx-auto")
+  cardBody.appendChild(btnsContainer);
+
+  let readBtn = document.createElement("button");
+  let cardReadText;
+  if (book.read === true){
+    readBtn.classList.add(...readClasses);
+    cardReadText = document.createTextNode("Read: Yes");
+  }else{
+    readBtn.classList.add(...notReadClasses);
+    cardReadText = document.createTextNode("Not Read Yet");
+  }
+  readBtn.appendChild(cardReadText);
+  btnsContainer.appendChild(readBtn);
+
+  let deleteBtn = document.createElement("button");
+  let deleteBtnText = document.createTextNode("Delete book");
+  deleteBtn.classList.add("btn", "btn-danger")
+  deleteBtn.appendChild(deleteBtnText);
+  btnsContainer.appendChild(deleteBtn);
 }
 
 function retrieveLocalStorage() {
-  if (localStorage.getItem("mylibrary")) {
-    mylibrary = JSON.parse(localStorage.getItem("mylibrary"));
-  } else {
-    library = DEFAULT_DATA;
-  }
+  // if (localStorage.getItem("mylibrary")) {
+    myLibrary = JSON.parse(localStorage.getItem("library"));
+  // } else {
+  //   library = DEFAULT_DATA;
+  // }
 }
 
-function updateLocalStorage (){
-  localStorage.setItem("myLibrary", JSON.stringify(myLibrary))
+function saveToLocalStorage (){
+  localStorage.clear();
+  localStorage.setItem("library", JSON.stringify(myLibrary))
 }
 
