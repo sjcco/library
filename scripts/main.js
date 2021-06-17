@@ -44,14 +44,6 @@ function addBookToLibrary(e) {
   displayBook(newBook)
 }
 
-function changeStatus(book){
-   if (read === true) {
-    book.read = false
-  }
-  else{
-    book.read = true
-  } 
-}
 
 function deleteBook(currentBook) {
   myLibrary.splice(myLibrary.indexOf(currentBook), 1)
@@ -62,6 +54,8 @@ function displayBook (book){
   card.classList.add(...bookClasses);
   bookshelf.appendChild(card);
   console.log(card);
+
+
 
   let cardTitle = document.createElement("h5");
   cardTitle.classList.add(...bookTitleClasses);
@@ -98,14 +92,31 @@ function displayBook (book){
     readBtn.classList.add(...notReadClasses);
     cardReadText = document.createTextNode("Not Read Yet");
   }
+
+  readBtn.setAttribute("id", "read" + book.title)
+  readBtn.addEventListener("click", changeStatus)
   readBtn.appendChild(cardReadText);
   btnsContainer.appendChild(readBtn);
+  
 
   let deleteBtn = document.createElement("button");
+  deleteBtn.setAttribute("id", "delete" + book.title)
+  deleteBtn.addEventListener("click", e =>{
+    myLibrary.splice(myLibrary.indexOf()
+  }) 
   let deleteBtnText = document.createTextNode("Delete book");
   deleteBtn.classList.add("btn", "btn-danger")
   deleteBtn.appendChild(deleteBtnText);
   btnsContainer.appendChild(deleteBtn);
+}
+
+function changeStatus(book){
+  if ("Read: Yes" === true) {
+   book.read = false
+ }
+ else{
+   book.read = true
+ } 
 }
 
 function retrieveLocalStorage() {
