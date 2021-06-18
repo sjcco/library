@@ -95,9 +95,9 @@ function displayBook(book) {
 }
 
 function clearForm() {
-  title.value = "";
-  author.value = "";
-  numPages.value = "";
+  title.value = '';
+  author.value = '';
+  numPages.value = '';
 }
 
 function addBookToLibrary(e) {
