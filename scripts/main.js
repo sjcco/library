@@ -100,6 +100,7 @@ function addBookToLibrary(e) {
   if (title.value.length === 0 || author.value.length === 0 || numPages.value === '') {// eslint-disable-line
     alert('Please, fill all the fields');// eslint-disable-line
     return;
+    clearForm();
   }
 
   myLibrary.push(newBook);
@@ -115,6 +116,12 @@ function renderStoredLibrary() {
       displayBook(book);
     });
   }
+}
+
+function clearForm() {
+  title.value = "";
+  author.value = "";
+  numPages.value = "";
 }
 
 document.querySelector('#bookform').addEventListener('submit', addBookToLibrary);
