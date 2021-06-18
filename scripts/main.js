@@ -13,7 +13,6 @@ function Book(title, author, numPages, read) {
   this.author = author;
   this.numPages = numPages;
   this.read = read;
-  clearForm();
 }
 
 function saveToLocalStorage() {
@@ -92,20 +91,22 @@ function displayBook(book) {
   deleteBtn.classList.add('btn', 'btn-danger');
   deleteBtn.appendChild(deleteBtnText);
   btnsContainer.appendChild(deleteBtn);
+  clearForm();
 }
 
-function clearForm() {
+ function clearForm() {
   title.value = '';
   author.value = '';
   numPages.value = '';
-}
+} 
 
 function addBookToLibrary(e) {
   e.preventDefault();
 
   const newBook = new Book(title.value, author.value, numPages.value, read.checked);// eslint-disable-line
   if (title.value.length === 0 || author.value.length === 0 || numPages.value === '') {// eslint-disable-line
-    alert('Please, fill all the fields');// eslint-disable-line
+    let alert = document.createElement('div');
+    alert.setAttribute('role', 'alert alert-warning');
     return;
   }
 
