@@ -13,6 +13,7 @@ function Book(title, author, numPages, read) {
   this.author = author;
   this.numPages = numPages;
   this.read = read;
+  clearForm();
 }
 
 function saveToLocalStorage() {
@@ -106,7 +107,6 @@ function addBookToLibrary(e) {
   if (title.value.length === 0 || author.value.length === 0 || numPages.value === '') {// eslint-disable-line
     alert('Please, fill all the fields');// eslint-disable-line
     return;
-    clearForm();
   }
 
   myLibrary.push(newBook);
