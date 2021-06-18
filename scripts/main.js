@@ -1,7 +1,26 @@
 let myLibrary = [];
 const bookshelf = document.querySelector('#library-container');
+const DEFAULT_DATA = [
+  {
+    title: 'The rings in perfect circle',
+    author: 'Hinsinjik',
+    read: false,
+  },
+  {
+    title: 'Wonderland the Lost Place',
+    author: 'Pearl Angle',
+    read: true,
+  },
+  {
+    title: 'The Masked Man',
+    author: 'Masroto Ginnaju',
+    read: false,
+  },
+];
+const modal = document.getElementById('myModal');
+const btn = document.getElementById('myBtn');
 
-
+// Get the <span> element that closes the modal
 const bookClasses = ['card', 'col-3', 'mb-3', 'mx-2', 'py-3'];
 const bookTitleClasses = ['text-center', 'card-title', 'my-1'];
 const bookTextClasses = ['card-text', 'text-center'];
@@ -31,6 +50,12 @@ function changeStatus(e) {
     e.target.classList.add(...notReadClasses);
     e.target.textContent = 'Not Read Yet';
   }
+}
+
+function clearForm() {
+  title.value = '';// eslint-disable-line
+  author.value = '';// eslint-disable-line
+  numPages.value = '';// eslint-disable-line
 }
 
 function displayBook(book) {
@@ -95,27 +120,22 @@ function displayBook(book) {
   clearForm();
 }
 
- function clearForm() {
-  title.value = '';
-  author.value = '';
-  numPages.value = '';
-} 
-
 function addBookToLibrary(e) {
   e.preventDefault();
 
   const newBook = new Book(title.value, author.value, numPages.value, read.checked);// eslint-disable-line
   if (title.value.length === 0 || author.value.length === 0 || numPages.value === '') {// eslint-disable-line
-    let alert = document.createElement('div');
+    const alert = document.createElement('div');
     alert.setAttribute('role', 'alert');
     alert.classList.add('alert', 'alert-warning');
 
 
-    let alertText = document.createTextNode('Please fill blank Spaces');
+    const alertText = document.createTextNode('Please fill blank Spaces');
     alert.appendChild(alertText);
 
-    let alertParent = document.querySelector ('#alert-container')
+    const alertParent = document.querySelector('#alert-container');
     alertParent.appendChild(alert);
+    setTimeout(del => { alert.remove(); }, 7000);// eslint-disable-line
     return;
   }
 
@@ -123,6 +143,7 @@ function addBookToLibrary(e) {
   saveToLocalStorage();
 
   displayBook(newBook);
+  modal.style.display = 'none';
 }
 
 function renderStoredLibrary() {
@@ -131,8 +152,27 @@ function renderStoredLibrary() {
     myLibrary.forEach((book) => {
       displayBook(book);
     });
+  } else {
+    myLibrary = DEFAULT_DATA;
+    DEFAULT_DATA.forEach((book) => {
+      displayBook(book);
+    });
   }
 }
+
+
+// When the user clicks on the button, open the modal
+btn.onclick = function () {// eslint-disable-line
+  modal.style.display = 'block';
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {// eslint-disable-line
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+};
+
 
 document.querySelector('#bookform').addEventListener('submit', addBookToLibrary);
 renderStoredLibrary();
