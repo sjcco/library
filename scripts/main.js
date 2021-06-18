@@ -1,6 +1,7 @@
 let myLibrary = [];
 const bookshelf = document.querySelector('#library-container');
 
+
 const bookClasses = ['card', 'col-3', 'mb-3', 'mx-2', 'py-3'];
 const bookTitleClasses = ['text-center', 'card-title', 'my-1'];
 const bookTextClasses = ['card-text', 'text-center'];
@@ -106,7 +107,15 @@ function addBookToLibrary(e) {
   const newBook = new Book(title.value, author.value, numPages.value, read.checked);// eslint-disable-line
   if (title.value.length === 0 || author.value.length === 0 || numPages.value === '') {// eslint-disable-line
     let alert = document.createElement('div');
-    alert.setAttribute('role', 'alert alert-warning');
+    alert.setAttribute('role', 'alert');
+    alert.classList.add('alert', 'alert-warning');
+
+
+    let alertText = document.createTextNode('Please fill blank Spaces');
+    alert.appendChild(alertText);
+
+    let alertParent = document.querySelector ('#alert-container')
+    alertParent.appendChild(alert);
     return;
   }
 
