@@ -93,6 +93,12 @@ function displayBook(book) {
   btnsContainer.appendChild(deleteBtn);
 }
 
+function clearForm() {
+  title.value = "";
+  author.value = "";
+  numPages.value = "";
+}
+
 function addBookToLibrary(e) {
   e.preventDefault();
 
@@ -116,12 +122,6 @@ function renderStoredLibrary() {
       displayBook(book);
     });
   }
-}
-
-function clearForm() {
-  title.value = "";
-  author.value = "";
-  numPages.value = "";
 }
 
 document.querySelector('#bookform').addEventListener('submit', addBookToLibrary);
